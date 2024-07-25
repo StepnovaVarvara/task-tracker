@@ -1,5 +1,6 @@
 package com.example.task_tracker.web.controller;
 
+import com.example.task_tracker.entity.Task;
 import com.example.task_tracker.mapper.TaskMapper;
 import com.example.task_tracker.service.TaskService;
 import com.example.task_tracker.web.model.request.TaskRequest;
@@ -7,7 +8,6 @@ import com.example.task_tracker.web.model.response.TaskResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

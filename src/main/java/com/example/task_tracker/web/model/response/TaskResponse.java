@@ -20,10 +20,9 @@ public class TaskResponse {
     private Instant updatedAt;
     private TaskStatus status;
 
-//    private String authorId;
-//    private String assigneeId;
     private UserResponse author;
     private UserResponse assignee;
 
-    private Set<String> observerIds = new HashSet<>();
+//    private Set<String> observerIds = new HashSet<>();
+    private Set<UserResponse> observers = new HashSet<>();
 }
