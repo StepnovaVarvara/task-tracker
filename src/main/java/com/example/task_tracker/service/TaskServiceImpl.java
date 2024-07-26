@@ -26,12 +26,18 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Flux<Task> findAll() {
-        return taskRepository.findAll();
+        return taskRepository.findAll()
+                .flatMap(task -> {
+                    return usersInTaskModel(task);
+                });
     }
 
     @Override
     public Mono<Task> findById(String taskId) {
-        return taskRepository.findById(taskId);
+        return taskRepository.findById(taskId)
+                .flatMap(task -> {
+                    return usersInTaskModel(task);
+                });
     }
 
     @Override
@@ -84,15 +90,15 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Mono<Task> addObserver(String taskId, String userId) {
-        Mono<Task> taskMono = taskRepository.findById(taskId);
-        Mono<User> userMono = userRepository.findById(userId);
+        return taskRepository.findById(taskId).flatMap(task -> {
+            if (task.getObserverIds() == null) {
+                task.setObserverIds(new HashSet<>());
+            }
 
-        taskMono.map(task -> {
-            task.getObservers();
-            return task;
+            task.getObserverIds().add(userId);
+            return taskRepository.save(task)
+                    .then(usersInTaskModel(task));
         });
-
-        return null;
     }
 
     @Override
